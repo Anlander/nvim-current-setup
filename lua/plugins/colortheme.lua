@@ -11,31 +11,41 @@ return {
         no_italic = true, -- Disable italics
         no_bold = true, -- Disable bold
         integrations = {
-          -- Add integrations for plugins you use (optional)
           cmp = true,
           gitsigns = true,
           nvimtree = true,
           telescope = true,
           treesitter = true,
-          -- For more integrations, see the documentation: https://github.com/catppuccin/nvim
         },
       }
 
       -- Set the colorscheme
       vim.cmd.colorscheme 'catppuccin'
 
-      -- Optional: Toggle transparency
-      local bg_transparent = false -- Start with transparency disabled
+      -- State variable
+      local bg_transparent = false
 
-      local toggle_transparency = function()
+      -- Toggle function
+      local function toggle_transparency()
         bg_transparent = not bg_transparent
-        vim.g.catppuccin_transparent_background = bg_transparent
-        -- Reapply the colorscheme after modifying the transparency
-        vim.cmd [[colorscheme catppuccin]] -- Reapply the colorscheme to update the background
+        require('catppuccin').setup {
+          flavour = 'mocha',
+          transparent_background = bg_transparent, -- Apply dynamic state
+          no_italic = true,
+          no_bold = true,
+          integrations = {
+            cmp = true,
+            gitsigns = true,
+            nvimtree = true,
+            telescope = true,
+            treesitter = true,
+          },
+        }
+        vim.cmd.colorscheme 'catppuccin' -- Reapply colorscheme to reflect changes
         vim.notify('Transparency ' .. (bg_transparent and 'enabled' or 'disabled'), vim.log.levels.INFO)
       end
 
-      -- Key mapping to toggle transparency
+      -- Key mapping
       vim.keymap.set('n', '<leader>bg', toggle_transparency, { noremap = true, silent = true })
     end,
   },
