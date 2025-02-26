@@ -28,4 +28,5 @@ require('lazy').setup {
   require 'plugins.misc',
   require 'plugins.autoclose',
   require 'plugins.nvim-ts-autotag',
+  require 'plugins.neoscroll',
 }
